@@ -1,9 +1,15 @@
 import { FlatList, Dimensions, View, TouchableOpacity, Text } from "react-native";
 import { Entry } from "../data/db";
 import EntryView from "./EntryView";
+import { useState } from "react";
 
 function EntryList({entries, deleteEntry}: {entries: Entry[], deleteEntry: Function}): React.JSX.Element {
-    const W = Dimensions.get('window').width;
+    const [W, setW] = useState(Dimensions.get('window').width);
+    const updateW = () => {
+      setW(Dimensions.get('window').width);
+    };
+    Dimensions.addEventListener('change', updateW);
+
     const pairs = entries.flatMap((_, i, a) => i % 2 ? [] : [a.slice(i, i + 2)]);
     return <FlatList
       style={{ height: '100%' }}

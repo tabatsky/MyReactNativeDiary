@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -24,7 +24,7 @@ function App(): React.JSX.Element {
     backgroundColor: 'white',
   };
 
-  const [entries, setEntries] = React.useState<Entry[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
 
   const loadData = async () => {
     try {
