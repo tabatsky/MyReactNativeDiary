@@ -1,6 +1,6 @@
-import { View, Dimensions, FlatList } from "react-native";
+import { Dimensions, FlatList } from "react-native";
 import ColorButton from "./ColorButton";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 function ButtonPanel({addEntry}: {addEntry: Function}): React.JSX.Element {
     const colors = [0, 1, 2, 3, 4, 5];
