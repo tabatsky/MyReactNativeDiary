@@ -1,5 +1,6 @@
-import { Alert, Text, TouchableOpacity, View } from 'react-native'
-import { Entry } from '../data/db'
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import { Entry } from '../data/db';
+import React from 'react';
 
 function EntryView({W, entry, deleteEntry}: {W: number, entry: Entry, deleteEntry: Function}): React.JSX.Element {
     return <TouchableOpacity onLongPress={ () => {
@@ -11,7 +12,7 @@ function EntryView({W, entry, deleteEntry}: {W: number, entry: Entry, deleteEntr
             {text: 'Да', onPress: () => deleteEntry(entry.id)},
         ]);
       } }>
-      <View 
+      <View
         style = {{
           width: W * 0.46,
           height: W * 0.15,
@@ -20,10 +21,10 @@ function EntryView({W, entry, deleteEntry}: {W: number, entry: Entry, deleteEntr
           justifyContent: 'center',
         }}
         ><Text>{formatTime(entry.time)}</Text></View>
-    </TouchableOpacity>
+    </TouchableOpacity>;
 }
 
-function formatTime(time: number): string {
+export function formatTime(time: number): string {
   const dt = Date.now() - time;
   const secTotal = Math.floor(dt / 1000);
   const sec = secTotal % 60;

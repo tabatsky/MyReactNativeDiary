@@ -1,9 +1,10 @@
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text } from 'react-native';
+import React from 'react';
 
 function ColorButton({color, A, addEntry}: {color: number, A: number, addEntry: Function}) : React.JSX.Element {
     const margin = color < 5 ? A / 5 : 0;
     return <TouchableOpacity onPress={() => { addEntry(color); }}>
-      <View 
+      <View
         style = {{
           width: A,
           height: A,
@@ -12,7 +13,7 @@ function ColorButton({color, A, addEntry}: {color: number, A: number, addEntry: 
           justifyContent: 'center',
         }}
       >
-        <Text style={{ 
+        <Text style={{
           textAlign: 'center',
         }}>{color + 1}</Text>
       </View>
@@ -20,4 +21,3 @@ function ColorButton({color, A, addEntry}: {color: number, A: number, addEntry: 
   }
 
   export default ColorButton;
-  

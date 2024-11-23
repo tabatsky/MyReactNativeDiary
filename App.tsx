@@ -13,9 +13,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import EntryList from './components/EntryList'
+import EntryList from './components/EntryList';
 import ButtonPanel from './components/ButtonPanel';
 import { addEntryToDb, createTable, deleteEntryFromDb, Entry, getDBConnection, getEntriesFromDb } from './data/db';
+import Header from './components/Header';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -30,8 +31,8 @@ function App(): React.JSX.Element {
     try {
       const db = await getDBConnection();
       await createTable(db);
-      const entries = await getEntriesFromDb(db);
-      setEntries(entries);
+      const entriesFromDb = await getEntriesFromDb(db);
+      setEntries(entriesFromDb);
     } catch (error) {
       console.error(error);
     }
@@ -60,10 +61,11 @@ function App(): React.JSX.Element {
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor='navy'
+        backgroundColor="navy"
       />
       <View
         style = {styles.mainView}>
+        <Header entries={entries}/>
         <View style={styles.listView}>
           <EntryList entries={entries} deleteEntry={deleteEntry}/>
         </View>
@@ -76,11 +78,11 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   mainView: {
     height: '100%',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   listView: {
-    flex: 1000
-  }
+    flex: 1000,
+  },
 });
 
 export default App;
