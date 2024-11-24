@@ -3,9 +3,10 @@ import {formatTime} from './EntryView';
 import {Entry} from '../data/db';
 import React from 'react';
 
-function TopEntryView({W, entry, color}: {W: number, entry: Entry | null, color: number}): React.JSX.Element {
+function TopEntryView({W, entry, color, filterByColor}:
+  {W: number, entry: Entry | null, color: number, filterByColor: Function}): React.JSX.Element {
     const timeStr = (entry != null) ? formatTime(entry.time) : 'никогда';
-    return <TouchableOpacity onPress={ () => {} }>
+    return <TouchableOpacity onPress={ () => { filterByColor(color); } }>
       <View
         style = {{
           width: W * 0.46,

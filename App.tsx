@@ -26,6 +26,15 @@ function App(): React.JSX.Element {
   };
 
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [colorFilter, setColorFilter] = useState(-1);
+  const filterByColor = (color: number) => {
+    if (colorFilter !== color) {
+      setColorFilter(color);
+    } else {
+      setColorFilter(-1);
+    }
+  };
+  const filteredEntries = entries.filter((value) => { return value.color === colorFilter || colorFilter === -1; });
 
   const loadData = async () => {
     try {
@@ -65,9 +74,9 @@ function App(): React.JSX.Element {
       />
       <View
         style = {styles.mainView}>
-        <Header entries={entries}/>
+        <Header entries={filteredEntries} filterByColor={filterByColor} />
         <View style={styles.listView}>
-          <EntryList entries={entries} deleteEntry={deleteEntry}/>
+          <EntryList entries={filteredEntries} deleteEntry={deleteEntry}/>
         </View>
         <ButtonPanel addEntry={addEntry} />
       </View>

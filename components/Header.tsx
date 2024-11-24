@@ -3,7 +3,7 @@ import {Entry} from '../data/db';
 import React, {useState} from 'react';
 import TopEntryView from './TopEntryView';
 
-function Header({entries}: {entries: Entry[]}): React.JSX.Element {
+function Header({entries, filterByColor}: {entries: Entry[], filterByColor: Function}): React.JSX.Element {
     const [W, setW] = useState(Dimensions.get('window').width);
     const updateW = () => {
       setW(Dimensions.get('window').width);
@@ -23,8 +23,8 @@ function Header({entries}: {entries: Entry[]}): React.JSX.Element {
       data={colorPairs}
       renderItem={({item}) => (
               <View style={{ flexDirection: 'row' }}>
-                  <TopEntryView W={W} color={item[0]} entry={topEntries[item[0]]} />
-                  <TopEntryView W={W} color={item[1]} entry={topEntries[item[1]]} />
+                  <TopEntryView W={W} color={item[0]} entry={topEntries[item[0]]} filterByColor={filterByColor} />
+                  <TopEntryView W={W} color={item[1]} entry={topEntries[item[1]]} filterByColor={filterByColor} />
               </View>
           )}
       keyExtractor={item => {
