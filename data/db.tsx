@@ -47,4 +47,11 @@ export const deleteEntryFromDb = async (db: SQLiteDatabase, id: number) => {
     `DELETE FROM entries WHERE id=${id}`;
 
   return db.executeSql(deleteQuery);
-}
+};
+
+export const deleteFromDbByColor = async (db: SQLiteDatabase, color: number) => {
+  const deleteQuery =
+    `DELETE FROM entries WHERE color=${color}`;
+
+  return db.executeSql(deleteQuery);
+};

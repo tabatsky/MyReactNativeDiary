@@ -15,7 +15,15 @@ import {
 } from 'react-native';
 import EntryList from './components/EntryList';
 import ButtonPanel from './components/ButtonPanel';
-import { addEntryToDb, createTable, deleteEntryFromDb, Entry, getDBConnection, getEntriesFromDb } from './data/db';
+import {
+  addEntryToDb,
+  createTable,
+  deleteEntryFromDb,
+  deleteFromDbByColor,
+  Entry,
+  getDBConnection,
+  getEntriesFromDb,
+} from './data/db';
 import Header from './components/Header';
 
 function App(): React.JSX.Element {
@@ -34,7 +42,7 @@ function App(): React.JSX.Element {
       setColorFilter(-1);
     }
   };
-  const filteredEntries = entries.filter((value) => { return value.color === colorFilter || colorFilter === -1; });
+  const filteredEntries = entries.filter((value) =>  value.color === colorFilter || colorFilter === -1);
 
   const loadData = async () => {
     try {
@@ -66,6 +74,12 @@ function App(): React.JSX.Element {
     await loadData();
   };
 
+  const deleteByColor = async (color: number) => {
+    const db = await getDBConnection();
+    await deleteFromDbByColor(db, color);
+    await loadData();
+  };
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -74,7 +88,7 @@ function App(): React.JSX.Element {
       />
       <View
         style = {styles.mainView}>
-        <Header entries={filteredEntries} filterByColor={filterByColor} />
+        <Header entries={filteredEntries} filterByColor={filterByColor} deleteByColor={deleteByColor} />
         <View style={styles.listView}>
           <EntryList entries={filteredEntries} deleteEntry={deleteEntry}/>
         </View>
