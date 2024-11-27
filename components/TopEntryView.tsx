@@ -3,8 +3,9 @@ import {formatTime} from './EntryView';
 import {Entry} from '../data/db';
 import React from 'react';
 
-function TopEntryView({W, entry, color, filterByColor, deleteByColor}:
-  {W: number, entry: Entry | null, color: number, filterByColor: Function, deleteByColor: Function}): React.JSX.Element {
+function TopEntryView({W, isPortrait, entry, color, filterByColor, deleteByColor}:
+  {W: number, isPortrait: boolean, entry: Entry | null, color: number, filterByColor: Function, deleteByColor: Function}): React.JSX.Element {
+    const hCoeff = isPortrait ? 1.0 : 0.2;
     const timeStr = (entry != null) ? formatTime(entry.time) : 'никогда';
     return <TouchableOpacity
         onPress={ () => { filterByColor(color); } }
@@ -21,8 +22,11 @@ function TopEntryView({W, entry, color, filterByColor, deleteByColor}:
       <View
         style = {{
           width: W * 0.46,
-          height: W * 0.15,
-          margin: W * 0.02,
+          height: W * 0.15 * hCoeff,
+          marginLeft: W * 0.02,
+          marginRight: W * 0.02,
+          marginTop: W * 0.02 * hCoeff,
+          marginBottom: W * 0.02 * hCoeff,
           backgroundColor: `hsl(${color * 60}, 100%, 50%)`,
           justifyContent: 'center',
         }}

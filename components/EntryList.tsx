@@ -5,10 +5,13 @@ import React, { useState } from 'react';
 
 function EntryList({entries, deleteEntry}: {entries: Entry[], deleteEntry: Function}): React.JSX.Element {
     const [W, setW] = useState(Dimensions.get('window').width);
-    const updateW = () => {
+    const [isPortrait, setIsPortrait] =
+        useState(Dimensions.get('window').width < Dimensions.get('window').height);
+    const updateDimensions = () => {
       setW(Dimensions.get('window').width);
+      setIsPortrait(Dimensions.get('window').width < Dimensions.get('window').height);
     };
-    Dimensions.addEventListener('change', updateW);
+    Dimensions.addEventListener('change', updateDimensions);
 
     const pairs = entries.flatMap((_, i, a) => i % 2 ? [] : [a.slice(i, i + 2)]);
     return <FlatList
@@ -17,11 +20,11 @@ function EntryList({entries, deleteEntry}: {entries: Entry[], deleteEntry: Funct
       renderItem={({item}) => {
         return item.length === 2 ?
         <View style={{ flexDirection: 'row' }}>
-          <EntryView W={W} entry={item[0]} deleteEntry={deleteEntry} />
-          <EntryView W={W} entry={item[1]} deleteEntry={deleteEntry} />
+          <EntryView W={W} isPortrait={isPortrait} entry={item[0]} deleteEntry={deleteEntry} />
+          <EntryView W={W} isPortrait={isPortrait} entry={item[1]} deleteEntry={deleteEntry} />
         </View> :
         <View style={{ flexDirection: 'row' }}>
-          <EntryView W={W} entry={item[0]} deleteEntry={deleteEntry} />
+          <EntryView W={W} isPortrait={isPortrait} entry={item[0]} deleteEntry={deleteEntry} />
         </View>;
       }}
       keyExtractor={item => {

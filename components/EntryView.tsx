@@ -2,7 +2,8 @@ import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { Entry } from '../data/db';
 import React from 'react';
 
-function EntryView({W, entry, deleteEntry}: {W: number, entry: Entry, deleteEntry: Function}): React.JSX.Element {
+function EntryView({W, isPortrait, entry, deleteEntry}: {W: number, isPortrait: boolean, entry: Entry, deleteEntry: Function}): React.JSX.Element {
+    const hCoeff = isPortrait ? 1.0 : 0.2;
     return <TouchableOpacity onLongPress={ () => {
         Alert.alert('Вы уверены?', 'Запись будет удалена', [
             {
@@ -15,8 +16,11 @@ function EntryView({W, entry, deleteEntry}: {W: number, entry: Entry, deleteEntr
       <View
         style = {{
           width: W * 0.46,
-          height: W * 0.15,
-          margin: W * 0.02,
+          height: W * 0.15 * hCoeff,
+          marginLeft: W * 0.02,
+          marginRight: W * 0.02,
+          marginTop: W * 0.02 * hCoeff,
+          marginBottom: W * 0.02 * hCoeff,
           backgroundColor: `hsl(${entry.color * 60}, 100%, 50%)`,
           justifyContent: 'center',
         }}

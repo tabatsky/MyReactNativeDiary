@@ -24,7 +24,7 @@ import {
   getDBConnection,
   getEntriesFromDb,
 } from './data/db';
-import Header from './components/Header';
+import TopEntryList from './components/TopEntryList.tsx';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -88,7 +88,7 @@ function App(): React.JSX.Element {
       />
       <View
         style = {styles.mainView}>
-        <Header entries={filteredEntries} filterByColor={filterByColor} deleteByColor={deleteByColor} />
+        <TopEntryList entries={filteredEntries} filterByColor={filterByColor} deleteByColor={deleteByColor} />
         <View style={styles.listView}>
           <EntryList entries={filteredEntries} deleteEntry={deleteEntry}/>
         </View>

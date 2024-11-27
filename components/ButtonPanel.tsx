@@ -6,17 +6,21 @@ function ButtonPanel({addEntry}: {addEntry: Function}): React.JSX.Element {
     const colors = [0, 1, 2, 3, 4, 5];
 
     const [A, setA] = useState(Dimensions.get('window').width / 7);
-    const updateA = () => {
+    const [isPortrait, setIsPortrait] =
+        useState(Dimensions.get('window').width < Dimensions.get('window').height);
+    const updateDimensions = () => {
         setA(Dimensions.get('window').width / 7);
+        setIsPortrait(Dimensions.get('window').width < Dimensions.get('window').height);
     };
-    Dimensions.addEventListener('change', updateA);
+    Dimensions.addEventListener('change', updateDimensions);
 
+    const hCoeff = isPortrait ? 1.0 : 0.2;
     return <FlatList
             horizontal
-            style={{ height: A }}
+            style={{ height: A * hCoeff }}
             data={colors}
             renderItem={({item}) => (
-                <ColorButton A={A} color={item} addEntry={addEntry} />
+                <ColorButton A={A} isPortrait={isPortrait} color={item} addEntry={addEntry} />
             )}
             keyExtractor={item => item.toString()}
           />;
