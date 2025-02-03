@@ -1,11 +1,11 @@
 import { View, TouchableOpacity, Text } from 'react-native';
 import React from 'react';
 
-function ColorButton({color, A, isPortrait, addEntry}:
-  {color: number, A: number, isPortrait: boolean, addEntry: Function}) : React.JSX.Element {
+function ColorButton({color, A, isPortrait, addEntry, addEntryWithDate}:
+  {color: number, A: number, isPortrait: boolean, addEntry: Function, addEntryWithDate: Function}) : React.JSX.Element {
     const hCoeff = isPortrait ? 1.0 : 0.2;
     const margin = color < 5 ? A / 5 : 0;
-    return <TouchableOpacity onPress={() => { addEntry(color); }}>
+    return <TouchableOpacity onPress={() => { addEntry(color); }} onLongPress={ () => { addEntryWithDate(color); }}>
       <View
         style = {{
           width: A,

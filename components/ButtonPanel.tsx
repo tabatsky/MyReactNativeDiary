@@ -2,7 +2,7 @@ import { Dimensions, FlatList } from 'react-native';
 import ColorButton from './ColorButton';
 import React, { useState } from 'react';
 
-function ButtonPanel({addEntry}: {addEntry: Function}): React.JSX.Element {
+function ButtonPanel({addEntry, addEntryWithDate}: {addEntry: Function, addEntryWithDate: Function}): React.JSX.Element {
     const colors = [0, 1, 2, 3, 4, 5];
 
     const [A, setA] = useState(Dimensions.get('window').width / 7);
@@ -20,7 +20,8 @@ function ButtonPanel({addEntry}: {addEntry: Function}): React.JSX.Element {
             style={{ height: A * hCoeff }}
             data={colors}
             renderItem={({item}) => (
-                <ColorButton A={A} isPortrait={isPortrait} color={item} addEntry={addEntry} />
+                <ColorButton A={A} isPortrait={isPortrait} color={item} 
+                    addEntry={addEntry} addEntryWithDate={addEntryWithDate} />
             )}
             keyExtractor={item => item.toString()}
           />;

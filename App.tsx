@@ -13,6 +13,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
 import EntryList from './components/EntryList';
 import ButtonPanel from './components/ButtonPanel';
 import {
@@ -32,6 +33,9 @@ function App(): React.JSX.Element {
   const backgroundStyle = {
     backgroundColor: 'white',
   };
+
+  const [date, setDate] = useState(new Date());
+  const [pickerOpened, setPickerOpened] = useState(false);
 
   const [entries, setEntries] = useState<Entry[]>([]);
   const [colorFilter, setColorFilter] = useState(-1);
@@ -68,6 +72,11 @@ function App(): React.JSX.Element {
     await loadData();
   };
 
+  const addEntryWithDate = (color: number) => {
+    setDate(new Date());
+    setPickerOpened(true);
+  };
+
   const deleteEntry = async (id: number) => {
     const db = await getDBConnection();
     await deleteEntryFromDb(db, id);
@@ -86,13 +95,26 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor="navy"
       />
-      <View
-        style = {styles.mainView}>
+        <View
+          style = {styles.mainView}>
+          <DatePicker
+            modal
+            open={pickerOpened}
+            date={date}
+            mode='datetime'
+            onConfirm={(date) => {
+              setPickerOpened(false)
+              setDate(date)
+            }}
+            onCancel={() => {
+              setPickerOpened(false)
+            }}
+          />
         <TopEntryList entries={filteredEntries} filterByColor={filterByColor} deleteByColor={deleteByColor} />
         <View style={styles.listView}>
-          <EntryList entries={filteredEntries} deleteEntry={deleteEntry}/>
+          <EntryList entries={filteredEntries} deleteEntry={deleteEntry} />
         </View>
-        <ButtonPanel addEntry={addEntry} />
+        <ButtonPanel addEntry={addEntry} addEntryWithDate={addEntryWithDate} />
       </View>
     </SafeAreaView>
   );
