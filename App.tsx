@@ -35,6 +35,7 @@ function App(): React.JSX.Element {
   };
 
   const [date, setDate] = useState(new Date());
+  const [colorToUse, setColorToUse] = useState(-1);
   const [pickerOpened, setPickerOpened] = useState(false);
 
   const [entries, setEntries] = useState<Entry[]>([]);
@@ -73,9 +74,16 @@ function App(): React.JSX.Element {
   };
 
   const addEntryWithDate = (color: number) => {
+    setColorToUse(color);
     setDate(new Date());
     setPickerOpened(true);
   };
+
+  const addEntryWithDateToDB = async (date: Date) => {
+    const db = await getDBConnection();
+    await addEntryToDb(db, {id: 0, color: colorToUse, time: date.getTime()});
+    await loadData();
+  }
 
   const deleteEntry = async (id: number) => {
     const db = await getDBConnection();
@@ -103,11 +111,11 @@ function App(): React.JSX.Element {
             date={date}
             mode='datetime'
             onConfirm={(date) => {
-              setPickerOpened(false)
-              setDate(date)
+              setPickerOpened(false);
+              addEntryWithDateToDB(date);
             }}
             onCancel={() => {
-              setPickerOpened(false)
+              setPickerOpened(false);
             }}
           />
         <TopEntryList entries={filteredEntries} filterByColor={filterByColor} deleteByColor={deleteByColor} />
