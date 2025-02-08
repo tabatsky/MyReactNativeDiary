@@ -22,7 +22,7 @@ export const createTable = async (db: SQLiteDatabase) => {
 export const getEntriesFromDb = async (db: SQLiteDatabase): Promise<Entry[]> => {
   try {
     const entries: Entry[] = [];
-    const results = await db.executeSql(`SELECT id,color,time FROM entries ORDER BY id DESC`);
+    const results = await db.executeSql(`SELECT id,color,time FROM entries ORDER BY time DESC`);
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         entries.push(result.rows.item(index))

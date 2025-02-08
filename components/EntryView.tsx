@@ -24,8 +24,13 @@ function EntryView({W, isPortrait, entry, deleteEntry}: {W: number, isPortrait: 
           backgroundColor: `hsl(${entry.color * 60}, 100%, 50%)`,
           justifyContent: 'center',
         }}
-        ><Text>{formatTime(entry.time)}</Text></View>
+        ><Text>{formatDateTime(entry.time)}</Text></View>
     </TouchableOpacity>;
+}
+
+export function formatDateTime(time: number): string {
+  const date = new Date(time);
+  return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
 
 export function formatTime(time: number): string {
